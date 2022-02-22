@@ -4,17 +4,17 @@ var fetch = require('node-fetch');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var userSchema = new Schema({
-  name: {
-      firstName: {
-          type: String,
-          required: true
-      },
-      lastName: String
-  }
-});
+// var userSchema = new Schema({
+//   name: {
+//       firstName: {
+//           type: String,
+//           required: true
+//       },
+//       lastName: String
+//   }
+// });
 
-var User = mongoose.model('User', userSchema);
+// var User = mongoose.model('User', userSchema);
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/chat.html');
