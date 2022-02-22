@@ -16,8 +16,10 @@ var userSchema = new Schema({
 var User = mongoose.model('User', userSchema);
 
 app.get('/', function(req, res){
+  try
+  {
     mongoose.connect('mongodb://srv-captain--hqcidoyxst/tstsdb', function (err) {
-       if (err) console.log(err);
+       if (err) { console.log(err); return; }
        console.log('Successfully connected');
        
        // Create User Obiect 
@@ -40,7 +42,7 @@ app.get('/', function(req, res){
 //        });
        
     });
-    
+  } catch (er) {console.log(er);}
     res.sendFile(__dirname + '/chat.html');
 });
 
