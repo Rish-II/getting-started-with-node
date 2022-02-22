@@ -1,8 +1,46 @@
 var app = require('express')();
+var mongoose = require('mongoose');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+var userSchema = new Schema({
+  name: {
+      firstName: {
+          type: String,
+          required: true
+      },
+      lastName: String
+  }
+});
+
+var User = mongoose.model('User', userSchema);
+
 app.get('/', function(req, res){
+    mongoose.connect('mongodb://srv-captain--hqcidoyxst/tstsdb', function (err) {
+       if (err) console.log(err);
+       console.log('Successfully connected');
+       
+       // Create User Obiect 
+        var UserObject = new User({
+            name: {
+              firstName: 'Sample',
+              lastName: 'Example'
+            }
+         });
+         
+       //Save the document into User table.
+       UserObject.save(function(err){
+        if (err) console.log(err);
+       })
+       
+       //Find the all user in User table.
+//        User.find({}, function(err, dbUsers){
+//         if (err) throw err;
+//           console.log(JSON.stringify(dbUsers));
+//        });
+       
+    });
+    
     res.sendFile(__dirname + '/chat.html');
 });
 
