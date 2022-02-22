@@ -1,29 +1,24 @@
-'use strict';
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-const express = require('express');
-const path = require('path')
-const PORT = process.env.PORT || 8080
-const HOST = process.env.HOST
-
-// App
-const app = express();
-app.get('/', (req, res) => {
-  res.send('Hello World - UPDATED');
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/chat.html');
 });
 
-var WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 40510})
-
-wss.on('connection', function (ws) {
-  ws.on('message', function (message) {
-    console.log('received: %s', message)
-  })
-
-  setInterval(
-    () => ws.send(`${new Date()}`),
-    1000
-  )
+io.on('connection', function(socket){
+    console.log('a user connected');
+    socket.on('joined', function(data) {
+        console.log(data);
+        socket.emit('acknowledge', 'Acknowledged');
+    });
+    socket.on('chat message', function(msg){
+        console.log('message: ' + msg);
+        socket.emit('response message', msg + '  from server');
+        //socket.broadcast.emit('response message', msg + '  from server');
+    });
 });
 
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+http.listen(8080, function(){
+    console.log('listening on *:8080');
+});
