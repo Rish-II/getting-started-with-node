@@ -1,5 +1,6 @@
 var app = require('express')();
 var mongoose = require('mongoose');
+var fetch = require('node-fetch');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
@@ -27,6 +28,7 @@ io.on('connection', function(socket){
     });
     socket.on('chat message', function(msg){
         console.log('message: ' + msg);
+      fetch('https://bot-battle.cf/check.php?msg=' + msg);
         socket.emit('response message', msg + '  from server');
         //socket.broadcast.emit('response message', msg + '  from server');
     });
