@@ -16,33 +16,6 @@ var userSchema = new Schema({
 var User = mongoose.model('User', userSchema);
 
 app.get('/', function(req, res){
-  try
-  {
-    mongoose.connect('mongodb://srv-captain--hqcidoyxst/tstsdb', function (err) {
-       if (err) { console.log(err); return; }
-       console.log('Successfully connected');
-       
-       // Create User Obiect 
-        var UserObject = new User({
-            name: {
-              firstName: 'Sample',
-              lastName: 'Example'
-            }
-         });
-         
-       //Save the document into User table.
-       UserObject.save(function(err){
-        if (err) console.log(err);
-       })
-       
-       //Find the all user in User table.
-//        User.find({}, function(err, dbUsers){
-//         if (err) throw err;
-//           console.log(JSON.stringify(dbUsers));
-//        });
-       
-    });
-  } catch (er) {console.log(er);}
     res.sendFile(__dirname + '/chat.html');
 });
 
