@@ -39,8 +39,8 @@ app.get('/', function(req, res){
 
 function insertNow(data)
 {
-    let insertQuery = 'INSERT INTO ? (?,?,?,?) VALUES (?,?,?,?)';
-    connection.execute(insertQuery, ["test-table","id","user","email","password","0",data,"teml","tpwd"], (er, rsp) =>
+    let insertQuery = 'INSERT INTO `test-table` (`id`,`user`,`email`,`password`) VALUES (?,?,?,?)';
+    connection.execute(insertQuery, ["0",data,"teml","tpwd"], (er, rsp) =>
         {
       console.log(er);
             if (er) sock.emit("response message", er.toString());
