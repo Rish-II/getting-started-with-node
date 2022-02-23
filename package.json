@@ -16,6 +16,7 @@
     "socket.io": "^2.0.4",
     "mongodb": "^3.0.7",
     "mongoose": "^5.0.15",
-    "node-fetch": "^1.7.1"
+    "node-fetch": "^1.7.1",
+    "mysql": "^2.18.1"
   }
 }
