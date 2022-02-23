@@ -11,6 +11,8 @@ var connection = mysql.createConnection({
   database : 'test-db'
 });
 
+var sock = null;
+
 connection.connect(function(err) {
   if (err) {
     console.error('error connecting: ' + err.stack);
@@ -40,15 +42,17 @@ function insertNow(data)
     let insertQuery = 'INSERT INTO ? (?,?,?,?) VALUES (?,?,?,?)';
     connection.execute(insertQuery, ["test-table","id","user","email","password","0",data,"teml","tpwd"], (er, rsp) =>
         {
-            if (er) socket.emit("response message", er.toString());
+      console.log(er);
+            if (er) sock.emit("response message", er.toString());
             else
             {
-                socket.emit("response message", "Task Done");
+                sock.emit("response message", "Task Done");
             }
         });
 }
 
 io.on('connection', function(socket){
+  sock = socket;
     console.log('a user connected');
     socket.on('joined', function(data) {
         console.log(data);
