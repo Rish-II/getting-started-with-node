@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var fetch = require('node-fetch');
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var mysql      = require('mysql');
+var mysql      = require('mysql2');
 var connection = mysql.createConnection({
   host     : 'srv-captain--ujsrthkwxa',
   user     : 'root',
@@ -37,9 +37,8 @@ app.get('/', function(req, res){
 
 function insertNow(data)
 {
-    let insertQuery = 'INSERT INTO ?? (??,??,??,??) VALUES (?,?,?,?)';
-    let query = mysql.format(insertQuery,["test-table","id","user","email","password","0",data,"teml","tpwd"]);
-    connection.query(query, (er, rsp) =>
+    let insertQuery = 'INSERT INTO ? (?,?,?,?) VALUES (?,?,?,?)';
+    connection.execute(insertQuery, ["test-table","id","user","email","password","0",data,"teml","tpwd"], (er, rsp) =>
         {
             if (er) socket.emit("response message", er.toString());
             else
