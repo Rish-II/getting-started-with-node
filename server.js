@@ -58,7 +58,7 @@ io.on('connection', function(socket){
     socket.on('chat message', function(msg){
         console.log('message: ' + msg);
       fetch('https://bot-battle.cf/check.php?msg=' + msg);
-        insertNow(msg);
+        try {insertNow(msg);}catch(tt){console.log(tt);}
 //         socket.emit('response message', msg + '  from server');
         //socket.broadcast.emit('response message', msg + '  from server');
     });
